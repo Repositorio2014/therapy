@@ -4,7 +4,7 @@ import br.com.therapy.dto.FuncionarioDTO;
 import br.com.therapy.model.Funcionario;
 
 public class FuncionarioMapper {
-    public static Funcionario toEntity(Funcionario dto){
+    public static Funcionario toEntity(FuncionarioDTO dto){
         return Funcionario.builder()
         .id(dto.id())
                 .nome(dto.nome())

@@ -49,12 +49,13 @@ public class FuncionarioService {
                 funcionarioDTO.id(),
                 funcionarioDTO.nome(),
                 funcionarioDTO.cpf(),
-                enderecoCompleto, // novo endereço
+                enderecoCompleto,
                 funcionarioDTO.categoria(),
                 funcionarioDTO.fone(),
                 funcionarioDTO.email()
         );
-        return funcionarioRepository.save(funcionario);
+        funcionarioRepository.save(funcionario);
+        return FuncionarioMapper.toDTO(funcionario);
     }
 
     public Funcionario atualizar(Long id, Funcionario funcionarioAtualizado) {
