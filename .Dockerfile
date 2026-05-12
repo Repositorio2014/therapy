@@ -1,13 +1,12 @@
-# Build stage
-FROM maven:3.9.6-eclipse-temurin-21 AS build
+# Etapa 1: build com Maven
+FROM eclipse-temurin:21-jdk AS build
 WORKDIR /app
-COPY pom.xml .
-COPY src ./src
-RUN mvn clean package -DskipTests
+COPY . .
+RUN ./mvnw clean package -DskipTests
 
-# Run stage
-FROM eclipse-temurin:21-jre-jammy
+# Etapa 2: imagem final
+FROM eclipse-temurin:21-jdk
 WORKDIR /app
-COPY --from=build /app/target/*.jar app.jar
+COPY --from=build /app/target/therapy-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 10000
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java","-jar","app.jar"]
