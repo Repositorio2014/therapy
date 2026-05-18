@@ -24,7 +24,6 @@ public class AuthController {
         this.authManager = authManager;
         this.jwtUtil = jwtUtil;
     }
-
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Map<String, String> creds) {
         Authentication authentication = authManager.authenticate(
@@ -39,4 +38,5 @@ public class AuthController {
 
         return ResponseEntity.ok(Map.of("token", token));
     }
+
 }

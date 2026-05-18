@@ -22,18 +22,33 @@ public class UsuarioService {
     }
 
     public boolean usuarioEncontrado(Optional<UsuarioDTO> usuario){
-        Optional<Usuario> user = this.usuarioRepository.findByUsername(usuario.get().nome());
+        Optional<Usuario> user = this.usuarioRepository.findByUsername(usuario.get().username());
+        return user.isPresent();
+    }
+
+    /*public boolean usuarioEncontrado(Optional<UsuarioDTO> usuario){
+        Optional<Usuario> user = this.usuarioRepository.findByUsername(usuario.get().username());
         if(user.isPresent()){
             return true;
         }
         return false;
-    }
+    }*/
 
-    public UsuarioDTO create(UsuarioDTO dto) {
+    /*public UsuarioDTO create(UsuarioDTO dto) {
         if (usuarioRepository.existsById(dto.id())) {
             throw new BusinessException("Já existe usuário com esse login");
         }
         Usuario usuario = UsuarioMapper.toEntity(dto);
         return UsuarioMapper.toDTO(usuarioRepository.save(usuario));
+    }*/
+
+    public UsuarioDTO create(UsuarioDTO dto) {
+        if (usuarioRepository.findByUsername(dto.username()).isPresent()) {
+            throw new BusinessException("Já existe usuário com esse login");
+        }
+        Usuario usuario = UsuarioMapper.toEntity(dto);
+        usuario.setPassword(passwordEncoder.encode(dto.password())); // importante: criptografar senha
+        return UsuarioMapper.toDTO(usuarioRepository.save(usuario));
     }
+
 }

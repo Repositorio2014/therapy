@@ -7,8 +7,8 @@ public record UsuarioDTO(
         @NotBlank(message = "Nome é obrigatório")
         String nome,
         @NotBlank(message = "Login é obrigatório")
-        String login,
+        String username,
         @NotBlank(message = "Senha é obrigatória")
-        String senha,
+        String password,
         String role
 ) {}

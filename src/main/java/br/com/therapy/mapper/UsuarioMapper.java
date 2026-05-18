@@ -7,8 +7,9 @@ public class UsuarioMapper {
     public static Usuario toEntity(UsuarioDTO dto) {
         return Usuario.builder()
                 .id(dto.id())
-                .username(dto.nome())
-                .password(dto.senha())
+                .nome(dto.nome())
+                .username(dto.username())
+                .password(dto.password())
                 .role(dto.role())
                 .build();
     }

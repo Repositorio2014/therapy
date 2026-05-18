@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -23,7 +24,7 @@ public class SecurityConfig {
         this.jwtFilter = jwtFilter;
     }
 
-    @Bean
+    /*@Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
@@ -37,7 +38,27 @@ public class SecurityConfig {
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
+    }*/
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        return http
+                .csrf(csrf -> csrf.disable())
+                .cors(cors -> cors.disable()) // ❌ errado, não desabilite
+                .cors(Customizer.withDefaults()) // ✅ habilite o CORS
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/usuarios").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/funcionarios/**").hasAnyRole("ADMIN", "GERENTE")
+                        .requestMatchers(HttpMethod.POST, "/funcionarios/**").hasAnyRole("ADMIN", "GERENTE")
+                        .requestMatchers(HttpMethod.PUT, "/funcionarios/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/funcionarios/**").hasRole("ADMIN")
+                        .anyRequest().authenticated()
+                )
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+                .build();
     }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
