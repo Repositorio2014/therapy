@@ -2,6 +2,7 @@ package br.com.therapy.config;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
+import java.util.List;
 
 @Component
 public class JwtUtil {
@@ -33,7 +35,7 @@ public class JwtUtil {
     }
 
     // Gera token com username e role
-    public String generateToken(UserDetails userDetails) {
+    /*public String generateToken(UserDetails userDetails) {
         return Jwts.builder()
                 .setSubject(userDetails.getUsername())
                 .claim("role", userDetails.getAuthorities().iterator().next().getAuthority())
@@ -41,7 +43,21 @@ public class JwtUtil {
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(secretKey, SignatureAlgorithm.HS256)
                 .compact();
+    }*/
+
+    public String generateToken(UserDetails userDetails) {
+        return Jwts.builder()
+                .setSubject(userDetails.getUsername())
+                .claim("roles", userDetails.getAuthorities()
+                        .stream()
+                        .map(GrantedAuthority::getAuthority)
+                        .toList())
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + expiration))
+                .signWith(secretKey, SignatureAlgorithm.HS256)
+                .compact();
     }
+
 
     // Extrai username do token
     public String extractUsername(String token) {
@@ -54,13 +70,13 @@ public class JwtUtil {
     }
 
     // Extrai role do token
-    public String extractRole(String token) {
-        return (String) Jwts.parserBuilder()
+    public List<String> extractRoles(String token) {
+        return (List<String>) Jwts.parserBuilder()
                 .setSigningKey(secretKey)
                 .build()
                 .parseClaimsJws(token)
                 .getBody()
-                .get("role");
+                .get("roles");
     }
 
     // Valida token

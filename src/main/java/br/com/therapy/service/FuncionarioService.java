@@ -1,11 +1,15 @@
 package br.com.therapy.service;
 
 import br.com.therapy.dto.FuncionarioDTO;
+import br.com.therapy.mapper.CategoriaFuncionarioMapper;
 import br.com.therapy.mapper.FuncionarioMapper;
 import br.com.therapy.model.Endereco;
 import br.com.therapy.model.Funcionario;
+import br.com.therapy.model.Usuario;
 import br.com.therapy.repository.FuncionarioRepository;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,13 +17,15 @@ import java.util.Optional;
 
 @Service
 public class FuncionarioService {
-
+    private static final Logger log = LoggerFactory.getLogger(FuncionarioService.class);
     private final FuncionarioRepository funcionarioRepository;
     private final EnderecoService enderecoService;
+    private final UsuarioService usuarioService;
 
-    public FuncionarioService(FuncionarioRepository funcionarioRepository, EnderecoService enderecoService) {
+    public FuncionarioService(FuncionarioRepository funcionarioRepository, EnderecoService enderecoService, UsuarioService usuarioService) {
         this.funcionarioRepository = funcionarioRepository;
         this.enderecoService = enderecoService;
+        this.usuarioService = usuarioService;
     }
 
     public List<FuncionarioDTO> listarTodos() {
@@ -43,25 +49,40 @@ public class FuncionarioService {
             Endereco enderecoCompleto = enderecoService.buscarPorCep(funcionario.endereco().getCep());
             funcionario.endereco(enderecoCompleto);
         }*/
-        Endereco enderecoCompleto = enderecoService.buscarPorCep(funcionarioDTO.endereco().getCep());
+        log.info("Started process of saving Funcionario, with {}", funcionarioDTO);
+
+        Endereco enderecoCompleto = enderecoService.buscarPorCep(funcionarioDTO.getEndereco().getCep());
+
+        if(!funcionarioDTO.getUsuario().cpf().equals(funcionarioDTO.getCpf())) {
+            log.info("Os cpf's estão diferentes {}", funcionarioDTO.getUsuario().cpf());
+            return null;
+        }
+        Optional<Usuario> userOpt = this.usuarioService.findUsuarioByCpf(funcionarioDTO.getUsuario().cpf());
+        if (haveCpf(userOpt)) return null;
 
         Funcionario funcionario = new Funcionario(
-                funcionarioDTO.id(),
-                funcionarioDTO.nome(),
-                funcionarioDTO.cpf(),
+                funcionarioDTO.getId(),
+                funcionarioDTO.getCpf(),
                 enderecoCompleto,
-                funcionarioDTO.categoria(),
-                funcionarioDTO.fone(),
-                funcionarioDTO.email()
+                CategoriaFuncionarioMapper.toEntity(funcionarioDTO.getCategoria()),
+                funcionarioDTO.getFone(),
+                funcionarioDTO.getEmail()
         );
         funcionarioRepository.save(funcionario);
         return FuncionarioMapper.toDTO(funcionario);
     }
 
+    private static boolean haveCpf(Optional<Usuario> userOpt) {
+        if (userOpt.isPresent() && (userOpt.get().getCpf() == null || userOpt.get().getCpf().isEmpty())) {
+            log.error("For insertion of Funcionario, must be provided a CPF registered.");
+            return true;
+        }
+        return false;
+    }
+
     public Funcionario atualizar(Long id, Funcionario funcionarioAtualizado) {
         return funcionarioRepository.findById(id)
                 .map(funcionario -> {
-                    funcionario.setNome(funcionarioAtualizado.getNome());
                     funcionario.setCpf(funcionarioAtualizado.getCpf());
                     funcionario.setCategoria(funcionarioAtualizado.getCategoria());
                     funcionario.setFone(funcionarioAtualizado.getFone());

@@ -3,6 +3,7 @@ package br.com.therapy.controller;
 import br.com.therapy.dto.FuncionarioDTO;
 import br.com.therapy.model.Funcionario;
 import br.com.therapy.service.FuncionarioService;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,9 +32,14 @@ public class FuncionarioController {
     }
 
     @PostMapping
-    public FuncionarioDTO salvar(@RequestBody FuncionarioDTO funcionario) {
-        return funcionarioService.salvar(funcionario);
+    public ResponseEntity<?> salvar(@RequestBody FuncionarioDTO funcionario) {
+        try {
+            return ResponseEntity.ok(funcionarioService.salvar(funcionario));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<Funcionario> atualizar(@PathVariable Long id, @RequestBody Funcionario funcionario) {
@@ -49,4 +55,10 @@ public class FuncionarioController {
         funcionarioService.deletar(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/teste")
+    public String teste() {
+        return "OK";
+    }
+
 }

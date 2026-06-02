@@ -30,6 +30,14 @@ public class Endereco {
     @JsonBackReference
     private Funcionario funcionario;
 
+    public Endereco(String cep, String logradouro, String complemento, String bairro, String localidade, String uf) {
+        this.cep = cep;
+        this.logradouro = logradouro;
+        this.complemento = complemento;
+        this.bairro = bairro;
+        this.localidade = localidade;
+        this.uf = uf;
+    }
 
     public Endereco() {
 

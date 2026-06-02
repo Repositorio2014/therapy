@@ -17,9 +17,13 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
+    private String cpf;
     private String username;
     private String password;
     private String role;
+
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private Funcionario funcionario;
 
     // getters e setters
 }

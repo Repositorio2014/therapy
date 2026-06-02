@@ -8,6 +8,7 @@ public class UsuarioMapper {
         return Usuario.builder()
                 .id(dto.id())
                 .nome(dto.nome())
+                .cpf(dto.cpf())
                 .username(dto.username())
                 .password(dto.password())
                 .role(dto.role())
@@ -15,6 +16,6 @@ public class UsuarioMapper {
     }
 
     public static UsuarioDTO toDTO(Usuario usuario){
-        return new UsuarioDTO(usuario.getId(), usuario.getUsername(), usuario.getUsername(), usuario.getPassword(), usuario.getRole());
+        return new UsuarioDTO(usuario.getId(), usuario.getNome(), usuario.getCpf(), usuario.getUsername(), usuario.getPassword(), usuario.getRole());
     }
 }

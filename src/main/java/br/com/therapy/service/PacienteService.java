@@ -3,6 +3,7 @@ package br.com.therapy.service;
 import br.com.therapy.dto.PacienteDTO;
 import br.com.therapy.exception.BusinessException;
 import br.com.therapy.exception.ResourceNotFoundException;
+import br.com.therapy.mapper.EnderecoMapper;
 import br.com.therapy.mapper.PacienteMapper;
 import br.com.therapy.model.Paciente;
 import br.com.therapy.repository.PacienteRepository;
@@ -48,7 +49,7 @@ public class PacienteService {
         paciente.setNome(dto.nome());
         paciente.setDataNascimento(dto.dataNascimento());
         paciente.setIdade(dto.idade());
-        paciente.setEndereco(dto.endereco());
+        paciente.setEndereco(EnderecoMapper.toEntity(dto.endereco()));
         paciente.setResponsaveis(dto.responsaveis());
         paciente.setPlano(PacienteMapper.toEntity(dto).getPlano());
 

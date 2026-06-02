@@ -5,26 +5,25 @@ import br.com.therapy.model.Funcionario;
 
 public class FuncionarioMapper {
     public static Funcionario toEntity(FuncionarioDTO dto){
-        return Funcionario.builder()
-        .id(dto.id())
-                .nome(dto.nome())
-                .cpf(dto.cpf())
-                .endereco(dto.endereco())
-                .categoria(dto.categoria())
-                .fone(dto.fone())
-                .email(dto.email())
-                .build();
+        return new Funcionario(
+                dto.getId(),
+                dto.getCpf(),
+                EnderecoMapper.toEntity(dto.getEndereco()),
+                CategoriaFuncionarioMapper.toEntity(dto.getCategoria()),
+                dto.getFone(),
+                dto.getEmail(),
+                UsuarioMapper.toEntity(dto.getUsuario()));
     }
 
     public static FuncionarioDTO toDTO(Funcionario funcionario){
         return new FuncionarioDTO(
                 funcionario.getId(),
-                funcionario.getNome(),
                 funcionario.getCpf(),
-                funcionario.getEndereco(),
-                funcionario.getCategoria(),
+                EnderecoMapper.toDTO(funcionario.getEndereco()),
+                CategoriaFuncionarioMapper.toDTO(funcionario.getCategoria()),
                 funcionario.getFone(),
-                funcionario.getEmail()
+                funcionario.getEmail(),
+                funcionario.getUsuario()
         );
     }
 }

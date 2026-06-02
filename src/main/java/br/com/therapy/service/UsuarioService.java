@@ -51,4 +51,11 @@ public class UsuarioService {
         return UsuarioMapper.toDTO(usuarioRepository.save(usuario));
     }
 
+    public Optional<Usuario> findUsuarioByUserName(String username){
+        return this.usuarioRepository.findByUsername(username);
+    }
+
+    public Optional<Usuario> findUsuarioByCpf(String cpf){
+        return this.usuarioRepository.findByCpf(cpf);
+    }
 }

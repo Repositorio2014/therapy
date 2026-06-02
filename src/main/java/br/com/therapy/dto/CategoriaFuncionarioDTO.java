@@ -1,12 +1,15 @@
 package br.com.therapy.dto;
 
-import br.com.therapy.model.Funcionario;
-
+import lombok.*;
 import java.util.List;
 
-public record CategoriaFuncionarioDTO(
-        Long id,
-        String nome,
-        List<Funcionario> funcionarios
-) {
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class CategoriaFuncionarioDTO{
+    private Long id;
+    private String nome;
+    //private List<FuncionarioDTO> funcionarios;
 }

@@ -19,7 +19,7 @@ public record PacienteDTO(
         Integer idade,
 
         @NotNull(message = "Endereço é obrigatório")
-        Endereco endereco,
+        EnderecoResponse endereco,
 
         List<String> responsaveis,
 
