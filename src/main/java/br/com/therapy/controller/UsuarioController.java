@@ -4,6 +4,7 @@ import br.com.therapy.dto.UsuarioDTO;
 import br.com.therapy.exception.BusinessException;
 import br.com.therapy.model.Usuario;
 import br.com.therapy.repository.UsuarioRepository;
+import br.com.therapy.response.UsuarioResponse;
 import br.com.therapy.service.UsuarioService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,13 +37,13 @@ public class UsuarioController {
         }
 
         if (usuario == null) throw new AssertionError();
-        UsuarioDTO novoUsuario = this.usuarioService.create(usuario);
+        UsuarioResponse novoUsuario = this.usuarioService.create(usuario);
         return ResponseEntity.status(HttpStatus.CREATED).body(novoUsuario);
     }
 
     @GetMapping
-    public ResponseEntity<List<UsuarioDTO>> listUsuarios() {
-        List<UsuarioDTO> usuarios = usuarioService.findAll();
+    public ResponseEntity<List<UsuarioResponse>> listUsuarios() {
+        List<UsuarioResponse> usuarios = usuarioService.findAll();
         return ResponseEntity.ok(usuarios);
     }
 
@@ -50,7 +51,7 @@ public class UsuarioController {
     @PutMapping("/{id}")
     public ResponseEntity<?> atualizarUsuario(@PathVariable Long id, @RequestBody UsuarioDTO usuarioDTO) {
         try {
-            UsuarioDTO atualizado = usuarioService.update(id, usuarioDTO);
+            UsuarioResponse atualizado = usuarioService.update(id, usuarioDTO);
             return ResponseEntity.ok(atualizado);
         } catch (BusinessException e) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());

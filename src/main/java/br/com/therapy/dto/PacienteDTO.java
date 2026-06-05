@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 import br.com.therapy.model.Endereco;
@@ -24,5 +25,9 @@ public record PacienteDTO(
         List<String> responsaveis,
 
         @NotBlank(message = "Plano é obrigatório (PARTICULAR ou PLANO)")
-        String plano
+        String plano,
+
+        Date dtCriacao,
+        Date dtAlteracao
+
 ) {}

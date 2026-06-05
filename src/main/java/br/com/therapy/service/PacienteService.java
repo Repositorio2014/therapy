@@ -9,6 +9,7 @@ import br.com.therapy.model.Paciente;
 import br.com.therapy.repository.PacienteRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,6 +40,11 @@ public class PacienteService {
             throw new BusinessException("Já existe paciente com esse nome");
         }
         Paciente paciente = PacienteMapper.toEntity(dto);
+
+        if(paciente.getDtCriacao() == null){
+            paciente.setDtCriacao(new Date());
+        }
+
         return PacienteMapper.toDTO(pacienteRepository.save(paciente));
     }
 
@@ -52,6 +58,7 @@ public class PacienteService {
         paciente.setEndereco(EnderecoMapper.toEntity(dto.endereco()));
         paciente.setResponsaveis(dto.responsaveis());
         paciente.setPlano(PacienteMapper.toEntity(dto).getPlano());
+        paciente.setDtAlteracao(dto.dtAlteracao());
 
         return PacienteMapper.toDTO(pacienteRepository.save(paciente));
     }

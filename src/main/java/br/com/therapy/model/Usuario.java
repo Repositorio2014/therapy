@@ -3,6 +3,8 @@ package br.com.therapy.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Date;
+
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,6 +23,8 @@ public class Usuario {
     private String username;
     private String password;
     private String role;
+    private Date dtCriacao = new Date();
+    private Date dtAlteracao;
 
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
     private Funcionario funcionario;

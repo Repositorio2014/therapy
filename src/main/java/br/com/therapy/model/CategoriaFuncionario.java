@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -18,12 +19,13 @@ public class CategoriaFuncionario {
     private Long id;
 
     private String nome;
+    private Date dtCriacao = new Date();
+    private Date dtAlteracao;
 
     @OneToMany(mappedBy = "categoria")
     @JsonBackReference
     private List<Funcionario> funcionarios;
 
     public CategoriaFuncionario() {
-
     }
 }

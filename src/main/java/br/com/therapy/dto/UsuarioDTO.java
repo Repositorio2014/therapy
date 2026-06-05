@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
+import java.util.Date;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -12,9 +14,8 @@ import lombok.*;
 @EqualsAndHashCode
 @Builder
 public class UsuarioDTO{
-
+        @JsonIgnore
         private Long id;
-
         @NotBlank(message = "Nome é obrigatório")
         private String nome;
         @NotBlank(message = "cpf é obrigatório")
@@ -22,7 +23,8 @@ public class UsuarioDTO{
         @NotBlank(message = "Login é obrigatório")
         private String username;
         @NotBlank(message = "Senha é obrigatória")
-        @JsonIgnore
         private String password;
         private String role;
+        private Date dtCriacao;
+        private Date dtAlteracao;
 }

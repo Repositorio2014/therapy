@@ -14,6 +14,8 @@ public class PacienteMapper {
         paciente.setEndereco(EnderecoMapper.toEntity(dto.endereco()));
         paciente.setResponsaveis(dto.responsaveis());
         paciente.setPlano(TipoPlano.valueOf(dto.plano().toUpperCase()));
+        paciente.setDtCriacao(dto.dtCriacao());
+        paciente.setDtAlteracao(dto.dtAlteracao());
         return paciente;
     }
 
@@ -24,7 +26,9 @@ public class PacienteMapper {
                 paciente.getIdade(),
                 EnderecoMapper.toDTO(paciente.getEndereco()),
                 paciente.getResponsaveis(),
-                paciente.getPlano().name()
+                paciente.getPlano().name(),
+                paciente.getDtCriacao(),
+                paciente.getDtAlteracao()
         );
     }
 }

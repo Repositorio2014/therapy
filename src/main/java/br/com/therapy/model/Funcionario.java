@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Date;
+
 @Entity
 @Data
 @Builder
@@ -32,6 +34,9 @@ public class Funcionario {
     @JoinColumn(name = "usuario_id", referencedColumnName = "id")
     private Usuario usuario;
 
+    private Date dtCriacao = new Date();
+    private Date dtAlteracao;
+
     public Funcionario(Long id, String cpf, Endereco enderecoCompleto, CategoriaFuncionario entity, String fone, String email) {
         this.id = id;
         this.cpf = cpf;
@@ -41,7 +46,7 @@ public class Funcionario {
         this.email = email;
     }
 
-    public Funcionario(Long id, String cpf, Endereco endereco, CategoriaFuncionario categoria, String fone, String email, Usuario usuario) {
+    public Funcionario(Long id, String cpf, Endereco endereco, CategoriaFuncionario categoria, String fone, String email, Usuario usuario, Date dtCriacao, Date dtAlteracao) {
         this.id = id;
         this.cpf = cpf;
         this.endereco = endereco;
@@ -49,6 +54,8 @@ public class Funcionario {
         this.fone = fone;
         this.email = email;
         this.usuario = usuario;
+        this.dtCriacao = dtCriacao;
+        this.dtAlteracao = dtAlteracao;
     }
 
 

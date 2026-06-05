@@ -1,6 +1,8 @@
 package br.com.therapy.dto;
 
 import lombok.*;
+
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -11,5 +13,7 @@ import java.util.List;
 public class CategoriaFuncionarioDTO{
     private Long id;
     private String nome;
+    private Date dtCriacao;
+    private Date dtAlteracao;
     //private List<FuncionarioDTO> funcionarios;
 }

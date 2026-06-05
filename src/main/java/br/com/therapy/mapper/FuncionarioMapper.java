@@ -12,7 +12,9 @@ public class FuncionarioMapper {
                 CategoriaFuncionarioMapper.toEntity(dto.getCategoria()),
                 dto.getFone(),
                 dto.getEmail(),
-                UsuarioMapper.toEntity(dto.getUsuario()));
+                UsuarioMapper.toEntity(dto.getUsuario()),
+                dto.getDtCriacao(),
+                dto.getDtAlteracao());
     }
 
     public static FuncionarioDTO toDTO(Funcionario funcionario){
@@ -23,7 +25,9 @@ public class FuncionarioMapper {
                 CategoriaFuncionarioMapper.toDTO(funcionario.getCategoria()),
                 funcionario.getFone(),
                 funcionario.getEmail(),
-                funcionario.getUsuario()
+                funcionario.getUsuario(),
+                funcionario.getDtCriacao(),
+                funcionario.getDtAlteracao()
         );
     }
 }

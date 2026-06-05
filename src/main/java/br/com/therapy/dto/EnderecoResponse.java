@@ -2,6 +2,8 @@ package br.com.therapy.dto;
 
 import lombok.*;
 
+import java.util.Date;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -14,5 +16,7 @@ public class EnderecoResponse {
     private String bairro;
     private String localidade;
     private String uf;
+    private Date dtCriacao;
+    private Date dtAlteracao;
 
 }

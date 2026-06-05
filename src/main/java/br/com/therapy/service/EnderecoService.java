@@ -6,6 +6,8 @@ import br.com.therapy.model.Endereco;
 import br.com.therapy.repository.EnderecoRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
 public class EnderecoService {
 
@@ -20,16 +22,15 @@ public class EnderecoService {
     public Endereco buscarPorCep(String cep) {
         EnderecoResponse response = viaCepClient.getEndereco(cep);
 
-        Endereco endereco = Endereco.builder()
+        return  Endereco.builder()
                 .cep(response.getCep())
                 .logradouro(response.getLogradouro())
                 .complemento(response.getComplemento())
                 .bairro(response.getBairro())
                 .localidade(response.getLocalidade())
                 .uf(response.getUf())
+                .dtCriacao(new Date())
                 .build();
-
-        return enderecoRepository.save(endereco);
     }
 
     public Endereco salvar(Endereco endereco) {
@@ -45,6 +46,7 @@ public class EnderecoService {
                     endereco.setBairro(enderecoAtualizado.getBairro());
                     endereco.setLocalidade(enderecoAtualizado.getLocalidade());
                     endereco.setUf(enderecoAtualizado.getUf());
+                    endereco.setDtAlteracao(enderecoAtualizado.getDtAlteracao());
                     return enderecoRepository.save(endereco);
                 })
                 .orElseThrow(() -> new RuntimeException("Endereço não encontrado"));

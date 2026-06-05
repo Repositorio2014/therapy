@@ -12,7 +12,9 @@ public class EnderecoMapper {
                 dto.getComplemento(),
                 dto.getBairro(),
                 dto.getLocalidade(),
-                dto.getUf());
+                dto.getUf(),
+                dto.getDtCriacao(),
+                dto.getDtAlteracao());
     }
 
     public static EnderecoResponse toDTO(Endereco endereco){
@@ -22,7 +24,9 @@ public class EnderecoMapper {
                 endereco.getComplemento(),
                 endereco.getBairro(),
                 endereco.getLocalidade(),
-                endereco.getUf());
+                endereco.getUf(),
+                endereco.getDtCriacao(),
+                endereco.getDtAlteracao());
     }
 
 }

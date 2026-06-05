@@ -10,10 +10,6 @@ import java.util.stream.Collectors;
 
 public class CategoriaFuncionarioMapper {
     public static CategoriaFuncionario toEntity(CategoriaFuncionarioDTO dto){
-        /*List<Funcionario> funcionarioList = dto.getFuncionarios()
-                .stream()
-                .map(FuncionarioMapper::toEntity)
-                .collect(Collectors.toList());*/
 
         return CategoriaFuncionario.builder()
                 .id(dto.getId())
@@ -22,14 +18,12 @@ public class CategoriaFuncionarioMapper {
     }
 
     public static CategoriaFuncionarioDTO toDTO(CategoriaFuncionario categoria){
-        /*List<FuncionarioDTO> funcionarioDTOList = categoria.getFuncionarios()
-                .stream()
-                .map(FuncionarioMapper::toDTO)
-                .collect(Collectors.toList());*/
 
         return new CategoriaFuncionarioDTO(
                 categoria.getId(),
-                categoria.getNome()
+                categoria.getNome(),
+                categoria.getDtCriacao(),
+                categoria.getDtAlteracao()
         );
     }
 }

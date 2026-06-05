@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,8 +69,22 @@ public class FuncionarioService {
                 funcionarioDTO.getFone(),
                 funcionarioDTO.getEmail()
         );
-        funcionarioRepository.save(funcionario);
-        return FuncionarioMapper.toDTO(funcionario);
+
+        if(funcionario.getDtCriacao() == null){
+            funcionario.setDtCriacao(new Date());
+        }
+
+        try {
+
+            funcionarioRepository.save(funcionario);
+            enderecoService.salvar(enderecoCompleto);
+
+            log.info("Persistence of {}", funcionario.getCpf());
+            return FuncionarioMapper.toDTO(funcionario);
+        }catch(Exception e){
+            log.error("Fail in persistence of {}", funcionario.getCpf());
+            return null;
+        }
     }
 
     private static boolean haveCpf(Optional<Usuario> userOpt) {
@@ -87,6 +102,7 @@ public class FuncionarioService {
                     funcionario.setCategoria(funcionarioAtualizado.getCategoria());
                     funcionario.setFone(funcionarioAtualizado.getFone());
                     funcionario.setEmail(funcionarioAtualizado.getEmail());
+                    funcionario.setDtAlteracao(funcionarioAtualizado.getDtAlteracao());
 
                     if (funcionarioAtualizado.getEndereco() != null &&
                             funcionarioAtualizado.getEndereco().getCep() != null) {
