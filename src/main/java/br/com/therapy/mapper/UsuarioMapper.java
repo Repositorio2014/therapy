@@ -6,12 +6,12 @@ import br.com.therapy.model.Usuario;
 public class UsuarioMapper {
     public static Usuario toEntity(UsuarioDTO dto) {
         return Usuario.builder()
-                .id(dto.id())
-                .nome(dto.nome())
-                .cpf(dto.cpf())
-                .username(dto.username())
-                .password(dto.password())
-                .role(dto.role())
+                .id(dto.getId())
+                .nome(dto.getNome())
+                .cpf(dto.getCpf())
+                .username(dto.getUsername())
+                .password(dto.getPassword())
+                .role(dto.getRole())
                 .build();
     }
 

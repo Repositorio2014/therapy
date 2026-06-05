@@ -1,16 +1,28 @@
 package br.com.therapy.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotBlank;
+import lombok.*;
 
-public record UsuarioDTO(
-        Long id,
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode
+@Builder
+public class UsuarioDTO{
+
+        private Long id;
+
         @NotBlank(message = "Nome é obrigatório")
-        String nome,
+        private String nome;
         @NotBlank(message = "cpf é obrigatório")
-        String cpf,
+        private String cpf;
         @NotBlank(message = "Login é obrigatório")
-        String username,
+        private String username;
         @NotBlank(message = "Senha é obrigatória")
-        String password,
-        String role
-) {}
+        @JsonIgnore
+        private String password;
+        private String role;
+}

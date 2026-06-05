@@ -53,11 +53,11 @@ public class FuncionarioService {
 
         Endereco enderecoCompleto = enderecoService.buscarPorCep(funcionarioDTO.getEndereco().getCep());
 
-        if(!funcionarioDTO.getUsuario().cpf().equals(funcionarioDTO.getCpf())) {
-            log.info("Os cpf's estão diferentes {}", funcionarioDTO.getUsuario().cpf());
+        if(!funcionarioDTO.getUsuario().getCpf().equals(funcionarioDTO.getCpf())) {
+            log.info("Os cpf's estão diferentes {}", funcionarioDTO.getUsuario().getCpf());
             return null;
         }
-        Optional<Usuario> userOpt = this.usuarioService.findUsuarioByCpf(funcionarioDTO.getUsuario().cpf());
+        Optional<Usuario> userOpt = this.usuarioService.findUsuarioByCpf(funcionarioDTO.getUsuario().getCpf());
         if (haveCpf(userOpt)) return null;
 
         Funcionario funcionario = new Funcionario(
