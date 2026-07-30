@@ -25,6 +25,8 @@ public class UsuarioDTO{
         @NotBlank(message = "Senha é obrigatória")
         private String password;
         private String role;
-        private Date dtCriacao;
+        @JsonIgnore
         private Date dtAlteracao;
+        @JsonIgnore
+        private Date dtCriacao;
 }

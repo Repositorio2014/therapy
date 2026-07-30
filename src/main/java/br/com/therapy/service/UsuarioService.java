@@ -43,6 +43,10 @@ public class UsuarioService {
         if (usuarioRepository.findByUsername(dto.getUsername()).isPresent()) {
             throw new BusinessException("Já existe usuário com esse login");
         }
+
+        if (usuarioRepository.findByCpf(dto.getCpf()).isPresent()) {
+            throw new BusinessException("Já existe usuário com esse cpf");
+        }
         Usuario usuario = UsuarioMapper.toEntity(dto);
         usuario.setPassword(passwordEncoder.encode(dto.getPassword())); // importante: criptografar senha
 
@@ -66,10 +70,10 @@ public class UsuarioService {
                 .orElseThrow(() -> new BusinessException("Usuário não encontrado"));
 
         // Atualiza os campos
-        usuario.setNome(dto.getNome());
-        usuario.setCpf(dto.getCpf());
-        usuario.setUsername(dto.getUsername());
-        usuario.setRole(dto.getRole());
+        usuario.setNome(!dto.getNome().isEmpty() ? dto.getNome() : usuario.getNome());
+        usuario.setCpf(!dto.getCpf().isEmpty() ? dto.getCpf() : usuario.getCpf());
+        usuario.setUsername(!dto.getUsername().isEmpty() ? dto.getUsername() : usuario.getUsername());
+        usuario.setRole(!dto.getRole().isEmpty() ? dto.getRole() : usuario.getRole());
         usuario.setDtAlteracao(new Date());
 
         // Atualiza senha se informada

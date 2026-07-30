@@ -37,10 +37,15 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/v3/api-docs/**",
                                 "/swagger-ui/**",
-                                "/swagger-ui.html"
+                                "/swagger-ui.html",
+                                "/auth/**",
+                                "/usuarios/**",
+                                "/pacientes/**",
+                                "/planos/**"
                         ).permitAll()
                         .requestMatchers("/auth/**", "/usuarios/**").permitAll()
                         .requestMatchers("/funcionarios/**").permitAll()
+                        .requestMatchers("/planos/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .cors(Customizer.withDefaults()); // usa o CorsConfigurationSource

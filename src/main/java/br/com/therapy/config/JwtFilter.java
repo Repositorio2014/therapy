@@ -35,7 +35,14 @@ public class JwtFilter extends OncePerRequestFilter {
         String method = request.getMethod();
 
         // Ignora login e cadastro inicial de usuários
-        if (path.equals("/auth/login") || (path.equals("/usuarios") && method.equals("POST"))) {
+        if (path.equals("/auth/login")
+                || (path.equals("/usuarios") && method.equals("POST"))
+                || (path.equals("/pacientes") && method.equals("POST"))
+                || (path.equals("/planos") && method.equals("POST"))
+                || path.startsWith("/swagger-ui")
+                || path.startsWith("/v3/api-docs")
+                || path.startsWith("/pacientes") && method.equals("GET")
+                || path.startsWith("/planos") && method.equals("GET")) {
             chain.doFilter(request, response);
             return;
         }

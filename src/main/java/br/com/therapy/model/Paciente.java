@@ -1,5 +1,6 @@
 package br.com.therapy.model;
 
+import br.com.therapy.dto.PlanoDTO;
 import br.com.therapy.enumeration.TipoPlano;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -39,7 +40,11 @@ public class Paciente {
 
     // Plano de saúde ou particular
     @Enumerated(EnumType.STRING)
-    private TipoPlano plano;
+    private TipoPlano tipoPlano;
+    // Muitos pacientes podem ter o mesmo plano
+    @ManyToOne
+    @JoinColumn(name = "plano_id") // chave estrangeira na tabela paciente
+    private Plano plano;
     private Date dtCriacao = new Date();
     private Date dtAlteracao;
 

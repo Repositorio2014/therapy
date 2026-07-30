@@ -36,7 +36,7 @@ public class PacienteService {
     }
 
     public PacienteDTO criar(PacienteDTO dto) {
-        if (pacienteRepository.existsByNome(dto.nome())) {
+        if (pacienteRepository.existsByNome(dto.getNome())) {
             throw new BusinessException("Já existe paciente com esse nome");
         }
         Paciente paciente = PacienteMapper.toEntity(dto);
@@ -52,13 +52,13 @@ public class PacienteService {
         Paciente paciente = pacienteRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Paciente não encontrado com id: " + id));
 
-        paciente.setNome(dto.nome());
-        paciente.setDataNascimento(dto.dataNascimento());
-        paciente.setIdade(dto.idade());
-        paciente.setEndereco(EnderecoMapper.toEntity(dto.endereco()));
-        paciente.setResponsaveis(dto.responsaveis());
+        paciente.setNome(dto.getNome());
+        paciente.setDataNascimento(dto.getDataNascimento());
+        paciente.setIdade(dto.getIdade());
+        paciente.setEndereco(EnderecoMapper.toEntity(dto.getEndereco()));
+        paciente.setResponsaveis(dto.getResponsaveis());
         paciente.setPlano(PacienteMapper.toEntity(dto).getPlano());
-        paciente.setDtAlteracao(dto.dtAlteracao());
+        paciente.setDtAlteracao(dto.getDtAlteracao());
 
         return PacienteMapper.toDTO(pacienteRepository.save(paciente));
     }
