@@ -1,6 +1,7 @@
 package br.com.therapy.controller;
 
 import br.com.therapy.dto.PacienteDTO;
+import br.com.therapy.dto.PacienteRequestDTO;
 import br.com.therapy.service.PacienteService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -30,13 +31,13 @@ public class PacienteController {
     }
 
     @PostMapping
-    public ResponseEntity<PacienteDTO> criar(@Valid @RequestBody PacienteDTO dto) {
+    public ResponseEntity<PacienteDTO> criar(@Valid @RequestBody PacienteRequestDTO dto) {
         PacienteDTO novoPaciente = pacienteService.criar(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(novoPaciente);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PacienteDTO> atualizar(@PathVariable Long id, @Valid @RequestBody PacienteDTO dto) {
+    public ResponseEntity<PacienteDTO> atualizar(@PathVariable Long id, @Valid @RequestBody PacienteRequestDTO dto) {
         return ResponseEntity.ok(pacienteService.atualizar(id, dto));
     }
 

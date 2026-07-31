@@ -7,15 +7,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
-import java.util.List;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 public class PlanoDTO {
-    @JsonIgnore
     private Long id;
     @NotBlank(message = "Nome é obrigatório")
     private String nome;

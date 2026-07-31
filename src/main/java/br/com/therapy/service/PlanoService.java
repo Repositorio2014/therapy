@@ -1,8 +1,6 @@
 package br.com.therapy.service;
 
-import br.com.therapy.dto.PlanoCreateDTO;
 import br.com.therapy.dto.PlanoDTO;
-import br.com.therapy.dto.PlanoRequest;
 import br.com.therapy.model.Plano;
 import br.com.therapy.repository.PlanoRepository;
 import org.springframework.stereotype.Service;
@@ -45,10 +43,10 @@ public class PlanoService {
     }
 
     // UPDATE
-    public PlanoDTO atualizar(Long id, PlanoDTO dto) {
+    public PlanoDTO atualizar(Long id, String nome) {
         Plano plano = planoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Plano não encontrado"));
-        plano.setNome(dto.getNome());
+        plano.setNome(nome);
         plano.setDtAlteracao(new Date());
         Plano atualizado = planoRepository.save(plano);
         return toDTO(atualizado);
@@ -65,6 +63,7 @@ public class PlanoService {
     // Conversão simples (pode ser substituída por Mapper)
     private PlanoDTO toDTO(Plano plano) {
         PlanoDTO dto = new PlanoDTO();
+        dto.setId(plano.getId());
         dto.setNome(plano.getNome());
         return dto;
     }

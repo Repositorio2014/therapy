@@ -29,4 +29,16 @@ public class EnderecoMapper {
                 endereco.getDtAlteracao());
     }
 
+    public static EnderecoResponse toDTO(EnderecoResponse endereco){
+        return new EnderecoResponse(
+                endereco.getCep(),
+                endereco.getLogradouro(),
+                endereco.getComplemento(),
+                endereco.getBairro(),
+                endereco.getLocalidade(),
+                endereco.getUf(),
+                endereco.getDtCriacao(),
+                endereco.getDtAlteracao());
+    }
+
 }

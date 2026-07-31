@@ -1,9 +1,12 @@
 package br.com.therapy.mapper;
 
 import br.com.therapy.dto.PacienteDTO;
+import br.com.therapy.dto.PacienteRequestDTO;
 import br.com.therapy.enumeration.TipoPlano;
 import br.com.therapy.model.Paciente;
 import br.com.therapy.model.Plano;
+
+import java.util.Date;
 
 public class PacienteMapper {
 
@@ -26,8 +29,23 @@ public class PacienteMapper {
         return paciente;
     }
 
+    public static Paciente toEntity(PacienteRequestDTO dto, Plano plano) {
+        Paciente paciente = new Paciente();
+        paciente.setNome(dto.getNome());
+        paciente.setDataNascimento(dto.getDataNascimento());
+        paciente.setIdade(dto.getIdade());
+        paciente.setEndereco(EnderecoMapper.toEntity(dto.getEndereco()));
+        paciente.setResponsaveis(dto.getResponsaveis());
+        paciente.setTipoPlano(TipoPlano.valueOf(dto.getTipoPlano()));
+        paciente.setPlano(plano); // aqui pode ser null
+        paciente.setDtCriacao(new Date());
+        return paciente;
+    }
+
+
     public static PacienteDTO toDTO(Paciente paciente) {
-        return new PacienteDTO(
+        PacienteDTO dto = new PacienteDTO(
+                paciente.getId(),
                 paciente.getNome(),
                 paciente.getDataNascimento(),
                 paciente.getIdade(),
@@ -38,5 +56,32 @@ public class PacienteMapper {
                 paciente.getDtCriacao(),
                 paciente.getDtAlteracao()
         );
+
+        if (paciente.getPlano() != null) {
+            dto.setPlanoId(paciente.getPlano().getId());
+            dto.setPlanoNome(paciente.getPlano().getNome());
+        }
+        return dto;
+
     }
+
+/*    public PacienteDTO fromRequestToDTO(PacienteRequestDTO request){
+        PacienteDTO dto = new PacienteDTO(
+                request.getNome(),
+                request.getDataNascimento(),
+                request.getIdade(),
+                EnderecoMapper.toDTO(request.getEndereco()),
+                request.getResponsaveis(),
+                request.getTipoPlano(),
+                request.getPlano(),
+                request.getDtCriacao(),
+                request.getDtAlteracao()
+        );
+
+        if (request.getPlano() != null) {
+            dto.setPlanoId(request.getPlano().getId());
+            dto.setPlanoNome(request.getPlano().getNome());
+        }
+        return dto;
+    }*/
 }

@@ -43,7 +43,7 @@ public class Paciente {
     private TipoPlano tipoPlano;
     // Muitos pacientes podem ter o mesmo plano
     @ManyToOne
-    @JoinColumn(name = "plano_id") // chave estrangeira na tabela paciente
+    @JoinColumn(name = "plano_id", nullable = true) // chave estrangeira na tabela paciente
     private Plano plano;
     private Date dtCriacao = new Date();
     private Date dtAlteracao;

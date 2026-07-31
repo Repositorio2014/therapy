@@ -1,8 +1,6 @@
 package br.com.therapy.controller;
 
-import br.com.therapy.dto.PlanoCreateDTO;
 import br.com.therapy.dto.PlanoDTO;
-import br.com.therapy.dto.PlanoRequest;
 import br.com.therapy.service.PlanoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
@@ -43,8 +41,8 @@ public class PlanoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PlanoDTO> atualizar(@PathVariable Long id, @Valid @RequestBody PlanoDTO dto) {
-        return ResponseEntity.ok(planoService.atualizar(id, dto));
+    public ResponseEntity<PlanoDTO> atualizar(@PathVariable Long id, @RequestParam String nome) {
+        return ResponseEntity.ok(planoService.atualizar(id, nome));
     }
 
     @DeleteMapping("/{id}")

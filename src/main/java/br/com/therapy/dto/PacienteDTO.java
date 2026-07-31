@@ -18,6 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PacienteDTO{
+        Long id;
         @NotBlank(message = "Nome é obrigatório")
         String nome;
 
@@ -34,10 +35,61 @@ public class PacienteDTO{
 
         @NotBlank(message = "Plano é obrigatório (PARTICULAR ou PLANO)")
         String tipoPlano;
+        @JsonIgnore
         Plano plano;
-        @JsonIgnore
+        Long planoId;
+        String planoNome;
         Date dtCriacao;
-        @JsonIgnore
         Date dtAlteracao;
+
+        public PacienteDTO(String nome,
+                           LocalDate dataNascimento,
+                           Integer idade,
+                           EnderecoResponse endereco,
+                           List<String> responsaveis,
+                           String tipoPlano,
+                           Plano plano,
+                           Date dtCriacao,
+                           Date dtAlteracao) {
+                this.nome = nome;
+                this.dataNascimento = dataNascimento;
+                this.idade = idade;
+                this.endereco = endereco;
+                this.responsaveis = responsaveis;
+                this.tipoPlano = tipoPlano;
+                this.plano = plano;
+                this.dtCriacao = dtCriacao;
+                this.dtAlteracao = dtAlteracao;
+        }
+
+        public PacienteDTO(Long id,
+                           String nome,
+                           LocalDate dataNascimento,
+                           Integer idade,
+                           EnderecoResponse dto,
+                           List<String> responsaveis,
+                           String name,
+                           Plano plano,
+                           Date dtCriacao,
+                           Date dtAlteracao) {
+                this.id = id;
+                this.nome = nome;
+                this.dataNascimento = dataNascimento;
+                this.idade = idade;
+                this.endereco = endereco;
+                this.responsaveis = responsaveis;
+                this.tipoPlano = tipoPlano;
+                this.plano = plano;
+                this.dtCriacao = dtCriacao;
+                this.dtAlteracao = dtAlteracao;
+        }
+
+        public Long getPlanoId() {
+                return plano != null ? plano.getId() : null;
+        }
+
+        public String getPlanoNome() {
+                return plano != null ? plano.getNome() : null;
+        }
 
 }
