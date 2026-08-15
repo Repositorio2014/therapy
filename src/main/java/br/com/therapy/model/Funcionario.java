@@ -58,6 +58,17 @@ public class Funcionario {
         this.dtAlteracao = dtAlteracao;
     }
 
+    public Funcionario(Long id, String cpf, Endereco endereco, CategoriaFuncionario categoria, String fone, String email, Usuario usuario, Date dtCriacao) {
+        this.id = id;
+        this.cpf = cpf;
+        this.endereco = endereco;
+        this.categoria = categoria;
+        this.fone = fone;
+        this.email = email;
+        this.usuario = usuario;
+        this.dtCriacao = dtCriacao;
+    }
+
 
 //    @ManyToMany(mappedBy = "funcionarios")
 //    private List<Agendamento> agendamentos;

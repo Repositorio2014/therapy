@@ -25,7 +25,7 @@ public class FuncionarioMapper {
                 CategoriaFuncionarioMapper.toDTO(funcionario.getCategoria()),
                 funcionario.getFone(),
                 funcionario.getEmail(),
-                funcionario.getUsuario(),
+                UsuarioMapper.toDTO(funcionario.getUsuario()),
                 funcionario.getDtCriacao(),
                 funcionario.getDtAlteracao()
         );

@@ -61,13 +61,16 @@ public class FuncionarioService {
         Optional<Usuario> userOpt = this.usuarioService.findUsuarioByCpf(funcionarioDTO.getUsuario().getCpf());
         if (haveCpf(userOpt)) return null;
 
+        userOpt.get();
         Funcionario funcionario = new Funcionario(
                 funcionarioDTO.getId(),
                 funcionarioDTO.getCpf(),
                 enderecoCompleto,
                 CategoriaFuncionarioMapper.toEntity(funcionarioDTO.getCategoria()),
                 funcionarioDTO.getFone(),
-                funcionarioDTO.getEmail()
+                funcionarioDTO.getEmail(),
+                userOpt.get(),
+                funcionarioDTO.getDtCriacao()
         );
 
         if(funcionario.getDtCriacao() == null){
@@ -80,7 +83,8 @@ public class FuncionarioService {
             enderecoService.salvar(enderecoCompleto);
 
             log.info("Persistence of {}", funcionario.getCpf());
-            return FuncionarioMapper.toDTO(funcionario);
+            FuncionarioDTO fDto = FuncionarioMapper.toDTO(funcionario);
+            return fDto;
         }catch(Exception e){
             log.error("Fail in persistence of {}", funcionario.getCpf());
             return null;

@@ -41,11 +41,13 @@ public class SecurityConfig {
                                 "/auth/**",
                                 "/usuarios/**",
                                 "/pacientes/**",
-                                "/planos/**"
+                                "/planos/**",
+                                "/agendamentos/**"
                         ).permitAll()
                         .requestMatchers("/auth/**", "/usuarios/**").permitAll()
                         .requestMatchers("/funcionarios/**").permitAll()
                         .requestMatchers("/planos/**").permitAll()
+                        .requestMatchers("/agendamentos/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .cors(Customizer.withDefaults()); // usa o CorsConfigurationSource
